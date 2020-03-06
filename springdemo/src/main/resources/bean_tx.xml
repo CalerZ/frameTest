@@ -24,6 +24,21 @@
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"></property>
     </bean>
-    <tx:advice id="transactionInterceptor" transaction-manager="txManager"></tx:advice>
 
+<!--xml配置spring 事务管理 -->
+<!--    <aop:config>-->
+<!--        <aop:advisor advice-ref="transactionInterceptor" pointcut="execution()"></aop:advisor>-->
+<!--    </aop:config>-->
+<!--    -->
+<!--    <tx:advice id="transactionInterceptor" transaction-manager="txManager">-->
+<!--        <tx:attributes>-->
+<!--            <tx:method name="transfer" isolation="DEFAULT" propagation="REQUIRED"/>-->
+<!--        </tx:attributes>-->
+<!--    </tx:advice>-->
+
+<!--    <tx:advice id="transactionInterceptor" transaction-manager="txManager"></tx:advice>-->
+<!--    <aop:aspectj-autoproxy proxy-target-class="true" expose-proxy="true"/>-->
+
+<!--   spring 注解事务配置-->
+    <tx:annotation-driven transaction-manager="txManager"></tx:annotation-driven>
 </beans>
