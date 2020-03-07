@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--  1.properties获取配置文件信息  -->
+<!--    <properties resource=""></properties>-->
+<!--    <settings>-->
+<!--&lt;!&ndash;        可以进行配置全局信息，如驼峰命名&ndash;&gt;-->
+<!--        <setting name="" value=""/>-->
+<!--    </settings>-->
+    <typeAliases>
+<!--        <typeAlias type="" alias=""></typeAlias>-->
+        <package name="com.caler.springdemo.mybatis.base.entity"/>
+<!--     package中有重复的类可以使用注解@alias ，相当于扫描包中注解  -->
+    </typeAliases>
+<!--    <typeHandlers>-->
+<!--&lt;!&ndash;        将java类型和数据库类型进行对应&ndash;&gt;-->
+<!--        <typeHandler handler=""></typeHandler>-->
+<!--        <package name=""/>-->
+<!--    </typeHandlers>-->
+<!--    <plugins>-->
+<!--&lt;!&ndash;        可以自定义拦截器拦截mybatis中四大组件&ndash;&gt;-->
+<!--        <plugin interceptor="" ></plugin>-->
+<!--    </plugins>-->
+    <environments default="mysql">
+        <environment id="mysql">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="com.caler.springdemo.mybatis.base.test.MyDataSource">
+                <property name="url" value="jdbc:mysql://localhost:3306/springtx"></property>
+                <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" ></property>
+                <property name="username" value="root"></property>
+                <property name="password" value="root"></property>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <databaseIdProvider type="DB_VENDOR">
+        <property name="MySql" value="mysql"/>
+    </databaseIdProvider>
+
+ <mappers>
+<!--     sql映射文件-->
+<!--     <mapper resource="mapper/UserMapper.xml"></mapper>-->
+<!--     可以进行注解DAO开发-->
+     <package name="com.caler.springdemo.mybatis.base.dao"/>
+ </mappers>
+
+</configuration>
