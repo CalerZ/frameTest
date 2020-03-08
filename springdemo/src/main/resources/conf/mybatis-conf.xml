@@ -8,6 +8,17 @@
 <!--    <settings>-->
 <!--&lt;!&ndash;        可以进行配置全局信息，如驼峰命名&ndash;&gt;-->
 <!--        <setting name="" value=""/>-->
+<!--&lt;!&ndash;        1.8默认方法参数获取&ndash;&gt;-->
+<!--        <setting name="" value=""/>-->
+<!--&lt;!&ndash;       开启懒加载 &ndash;&gt;-->
+<!--        <setting name="lazyLoadingEnabled" value="true"/>-->
+<!--&lt;!&ndash;        开启属性延迟加载&ndash;&gt;-->
+<!--        <setting name="aggressiveLazyLoading" value="true"/>-->
+<!--&lt;!&ndash;    解决oracle null值不能插入    当没有为参数提供特定的 JDBC 类型时，为空值指定 JDBC 类型。 某些驱动需要指定列的 JDBC 类型，多数情况直接用一般类型即可，比如 NULL、VARCHAR 或 OTHER。&ndash;&gt;-->
+<!--        <setting name="jdbcTypeForNull" value="NULL"/>-->
+<!--&lt;!&ndash;       许使用方法签名中的名称作为语句参数名称 你的项目必须采用 Java 8 编译，并且加上 -parameters 选项&ndash;&gt;-->
+<!--        <setting name="useActualParamName" value="true"/>-->
+
 <!--    </settings>-->
     <typeAliases>
 <!--        <typeAlias type="" alias=""></typeAlias>-->
@@ -43,7 +54,8 @@
 <!--     sql映射文件-->
 <!--     <mapper resource="mapper/UserMapper.xml"></mapper>-->
 <!--     可以进行注解DAO开发-->
-     <package name="com.caler.springdemo.mybatis.base.dao"/>
+     <package name="com.caler.springdemo.mybatis.dynamic.dao"/>
+<!--     <mapper class="com.caler.springdemo.mybatis.dynamic.dao.UserMapper"></mapper>-->
  </mappers>
 
 </configuration>

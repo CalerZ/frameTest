@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.caler.springdemo.mybatis.dynamic.dao.UserMapper">
+    <!--   if-->
+    <!--   where   只能在条件语句前加and 或者or-->
+    <!--   when case other -->
+    <!--    set-->
+    <!--    foreach-->
+    <!--bind-->
+    <!--    sql  include-->
+    <!--    _paramater _databaseid-->
+
+
+    <!--     public void addUser(User user);-->
+    <insert id="addUser" databaseId="mysql">
+
+        insert into account(name,money,d_id) values(#{name},#{money},#{dept.id})
+    </insert>
+
+    <!--     public User getUser(User user);-->
+    <!--    -->
+    <select id="getUser" databaseId="mysql" resultType="com.caler.springdemo.mybatis.dynamic.entity.User">
+        select * from account
+
+        <!--        <where>-->
+        <!--            <if test="name!=null and name!=''">-->
+        <!--                and name like #{name}-->
+        <!--            </if>-->
+        <!--            <if test="money!=null and money!=''">-->
+        <!--                and money = #{money}-->
+        <!--            </if>-->
+        <!--            <if test="dept.id!=null and dept.id!=''">-->
+        <!--                and d_id = #{dept.id}-->
+        <!--            </if>-->
+        <!--        </where>-->
+        <where>
+            <choose>
+                <when test="name!=null and name!=''">
+                    name like #{name}
+                </when>
+                <when test="money!=null and money!=''">
+                    money = #{money}
+                </when>
+                <otherwise>
+                    1=1
+                </otherwise>
+            </choose>
+        </where>
+
+    </select>
+
+    <update id="updateser">
+        update account
+        -- 去掉最后一个，
+        <!--        <set>-->
+        <!--            <if test="name!=null and name!=''">-->
+        <!--                 name = #{name},-->
+        <!--            </if>-->
+        <!--            <if test="money!=null and money!=''">-->
+        <!--                money = #{money},-->
+        <!--            </if>-->
+        <!--            <if test="dept.id!=null and dept.id!=''">-->
+        <!--                d_id = #{dept.id},-->
+        <!--            </if>-->
+        <!--            -->
+        <!--        </set>-->
+        <!--            <trim prefix="set" suffixOverrides=",">-->
+        <!--                <if test="name!=null and name!=''">-->
+        <!--                    name = #{name},-->
+        <!--                </if>-->
+        <!--                <if test="money!=null and money!=''">-->
+        <!--                    money = #{money},-->
+        <!--                </if>-->
+        <!--                <if test="dept.id!=null and dept.id!=''">-->
+        <!--                    d_id = #{dept.id},-->
+        <!--                </if>-->
+
+        <!--            </trim>-->
+        <trim prefix="set" suffixOverrides=",">
+            <foreach collection="user" item="item" separator=",">
+                #{item}
+            </foreach>
+
+        </trim>
+        where id =#{id}
+    </update>
+
+    <select id="getUserByList" resultType="">
+        select * from account where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+
+    </select>
+
+    <select id="getUserByName" resultType="">
+        <bind name="_name" value="'%'+name+'%'"/>
+        select * from account --where name like #{_name}
+        <include refid="mywhere"></include>
+    </select>
+
+    <sql id="myWhere">
+        <where>
+            <if test="name!=null and name!=''">
+                and name = #{name},
+            </if>
+            <if test="money!=null and money!=''">
+                and money = #{money},
+            </if>
+            <if test="dept.id!=null and dept.id!=''">
+                and d_id = #{dept.id},
+            </if>
+        </where>
+    </sql>
+
+</mapper>

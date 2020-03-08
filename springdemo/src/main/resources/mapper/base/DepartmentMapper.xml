@@ -1,0 +1,38 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.caler.springdemo.mybatis.base.dao.DepartmentMapper">
+
+<!--&lt;!&ndash;  1.  演示collection&ndash;&gt;-->
+<!--    <resultMap id="myDept" type="com.caler.springdemo.mybatis.base.entity.Department">-->
+<!--        <id column="id" property="id"/>-->
+<!--        <result column="dept_name" property="deptname"/>-->
+<!--        <collection property="users" ofType="com.caler.springdemo.mybatis.base.entity.User">-->
+<!--            <id column="uid" property="id"/>-->
+<!--            <result column="name" property="name"/>-->
+<!--            <result column="money" property="money"/>-->
+<!--        </collection>-->
+
+<!--    </resultMap>-->
+
+
+<!--    <select id="getDeptById"  resultMap="myDept">-->
+<!--        select d.id,d.dept_name,a.id uid,a.name,a.money from department d left join account a on a.d_id=d.id where id=#{id}-->
+<!--    </select>-->
+
+
+<!--    2.分步collection-->
+
+    <resultMap id="myDept" type="com.caler.springdemo.mybatis.base.entity.Department">
+        <id column="id" property="id"/>
+        <result column="dept_name" property="deptName"/>
+        <collection property="users" select="com.caler.springdemo.mybatis.base.dao.UserMapper.getUserByDeptId" column="id"></collection>
+    </resultMap>
+
+    <select id="getDeptById" resultMap="myDept">
+        select id,dept_name from department where id=#{id}
+
+    </select>
+
+
+</mapper>

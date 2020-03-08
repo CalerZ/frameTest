@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.caler.springdemo.mybatis.base.dao.UserMapper">
+    <select id="getUserById" resultType="com.caler.springdemo.mybatis.base.entity.User" databaseId="mysql">
+    select * from account where id=#{id}
+    </select>
+
+
+    <insert id="addUser" databaseId="mysql" useGeneratedKeys="true" keyProperty="id">
+        insert into account(name, money)  values(#{name},#{money})
+
+    </insert>
+
+
+    <insert id="addUser" databaseId="oracle">
+        <selectKey keyProperty="id" order="BEFORE" databaseId="oracle" resultType="Integer">
+            select user_sqe.nextval from daul
+
+        </selectKey>
+        insert into account(id,name, money) values(#{id},#{name,jdbcType=NULL},#{money})
+
+    </insert>
+
+
+    <resultMap id="myResult" type="com.caler.springdemo.mybatis.base.entity.User">
+        <!--            1.使用级联属性-->
+        <!--        <id property="id" column="id"></id>-->
+        <!--        <result property="name" column="name"/>-->
+        <!--        <result property="money" column="money"/>-->
+        <!--        <result property="did" column="dept.id"/>-->
+        <!--        <result property="deptname" column="deptName"/>-->
+
+        <!--      2.使用association   一对多-->
+        <!--        <id property="id" column="id"></id>-->
+        <!--        <result property="name" column="name"/>-->
+        <!--        <result property="money" column="money"/>-->
+        <!--        <association property="dept" javaType="com.caler.springdemo.mybatis.base.entity.Department">-->
+        <!--            <id property="id" column="did"/>-->
+        <!--            <result property="deptname" column="deptname"/>-->
+        <!--        </association>-->
+        <!--       3.使用分步查询       先使用sql查询user，然后用department的查询再进行查询      使用分步加载可以用懒加载技术，但需要在全局配置懒加载-->
+        <id property="id" column="id"></id>
+        <result property="name" column="name"/>
+        <result property="money" column="money"/>
+        <association property="dept" select="com.caler.springdemo.mybatis.base.dao.DepartmentMapper.getDeptById" column="d_id">
+        </association>
+
+
+    </resultMap>
+<!--    <select id="getUser" resultMap="myResult">-->
+<!--        SELECT a.name,a.money,b.id did,b.deptname FROM  user a,dept b-->
+<!--        where a.d_id =b.id and a.id=#{id}-->
+
+<!--    </select>-->
+    <select id="getUser" resultMap="myResult">
+        SELECT * FROM  user where id=#{id}
+    </select>
+
+
+    <select id="getUserByDeptId" resultType="com.caler.springdemo.mybatis.base.entity.User">
+        select * from account where d_id=#{deptid}
+
+    </select>
+
+</mapper>

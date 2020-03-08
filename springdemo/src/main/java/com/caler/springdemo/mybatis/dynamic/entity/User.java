@@ -1,4 +1,4 @@
-package com.caler.springdemo.mybatis.base.entity;
+package com.caler.springdemo.mybatis.dynamic.entity;
 
 /**
  * @author Caler_赵康乐
